@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<section class="container">
+        <div class="row mx-auto p-2" style="width: 400px;border:solid black 1px;margin-top:100px; margin-bottom:100px;">
+            <div class="col">
+             
+            <form method="post" style="margin-bottom:25px">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        Vous êtes déjà connecté(e) comme {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Me déconnecter</a>
+                    </div>
+                {% endif %}
+
+                
+                <h1 class="h3 mb-3 font-weight-normal" style="border-bottom:solid blue 2px;padding-bottom:15px;padding-top:20px;">Se connecter</h1>
+                <label for="inputName">Nom utilisateur :</label>
+                <input type="text" value="{{ last_username }}" name="name" id="inputName" class="form-control mb-3" autocomplete="username" required autofocus>
+                <label for="inputPassword">Mot de passe :</label>
+                <input type="password" name="password" id="inputPassword" class="form-control mb-3" autocomplete="current-password" required>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                {#
+                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                    See https://symfony.com/doc/current/security/remember_me.html
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Remember me
+                        </label>
+                    </div>
+                #}
+                <div  style=" display: flex;justify-content: center;align-items: center">
+                    <button class="btn btn-primary" type="submit"  aria-label="Se connecter">
+                        Se connecter
+                    </button>
+                </div>
+            </form>
+            
+
+            <div class="mt-3 mb-3"  style="border-bottom:solid blue 2px;padding-bottom:15px;">
+                <a href="#">Mot de passe oublié</a>
+            </div>
+
+            <div style="padding-bottom:30px;">
+            <p  style="margin-bottom:3px;">Pas encore inscrit?</p>
+            <div  style=" display: flex;justify-content: center;align-items: center">
+                <button class="btn btn-primary" type="submit"  aria-label="Créez un compte">
+                    <a href="{{path('app_register')}}" style="color:white; text-decoration:none;">Créer un compte</a>
+                </button>
+            </div>
+            </div>
+
+            </div>
+        </div>
+</section>
+{% endblock %}

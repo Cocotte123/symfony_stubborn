@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <section class="container">
+        <div class="row mx-auto p-2" style="width: 400px;border:solid black 1px;margin-top:100px; margin-bottom:100px;">
+            <div class="col">
+                <h1 class="h3 mb-3 font-weight-normal" style="border-bottom:solid blue 2px;padding-bottom:15px;padding-top:20px;">S'inscrire</h1>
+
+                {{ form_start(registrationForm) }}
+                <fieldset class="mb-3" style="padding-bottom:15px;">
+                    
+                    {{ form_row(registrationForm.name) }}
+                
+                    {{ form_row(registrationForm.email) }}
+                </fieldset>
+                <fieldset class="mb-3" style="padding-bottom:20px;">
+              
+                    {{ form_row(registrationForm.delivery_adress) }}
+                </fieldset>
+                <fieldset class="mb-3" style="border-bottom:solid blue 2px;padding-bottom:15px;">
+                    <div>
+                    <label for="pass">Mot de passe</label>
+                    <input type="password" id="pass1" name="password1" minlength="6" required class='form-control' />
+                    </div>
+                    {{ form_row(registrationForm.plainPassword) }}
+                    <div style="margin-top:10px;">
+                        <button type="submit" class="btn btn-primary" aria-label="Créez un compte">Créez un compte</button>
+                    </div>
+                </fieldset>   
+                    
+
+                    
+                {{ form_end(registrationForm) }}
+
+                <div style="padding-bottom:30px;">
+                    <p  style="margin-bottom:3px;">Déjà inscrit?</p>
+                    <div>
+                        <button class="btn btn-primary" type="submit"  aria-label="Se connecter">
+                            <a href="{{path('app_login')}}" style="color:white; text-decoration:none;">Se connecter</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
