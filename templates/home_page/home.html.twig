@@ -5,14 +5,29 @@
 {% block body %}
 
 <main>
-  <div id="homeProduct" class="container">
-    <div class="row">
-      <div class="col-lg-4" style="border: solid black 2px">
-        <img alt="" />
-        <h2>Nom produit</h2>
-        <p>Prix</p>
-      </div>
-    </div>
-  </div>
+  <section class="container">
+        <div  class="row d-flex">
+        {% for produit in produits %}
+        
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;padding:10px;margin-bottom:20px;">
+                    <img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.name }}">
+                    <div class="d-flex flex-row mx-auto" style="width: 90%;">
+                        <div class="text-left"  style="width: 50%;">
+                        <h5 class="card-title">{{ produit.name }}</h5>
+                        <p class="card-text">{{produit.formattedPrice}}€</p>
+                        </div>
+                        {% if app.user%}
+                        <div class="align-self-center text-center"  style="width: 50%;">
+                        <a href=href="{{path('app_product_detail', {id:produit.id})}}" class="btn btn-primary">Voir</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+       
+        {% endfor %}
+        </div>
+    </section>
 </main>
 {% endblock %}

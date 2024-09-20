@@ -39,6 +39,24 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function filterbyprice($intervalprice=null){
+
+        $query= $this->createQueryBuilder('p');
+        if($intervalprice = 1) {
+            $query->where('p.price >= 1000')
+                    ->andWhere('p.price < 3000');
+        }
+        if ($intervalprice = 2){
+            $query->where('p.price >= 3000')
+                    ->andWhere('p.price < 3600');
+        }
+        if ($intervalprice = 3){
+            $query->where('p.price >= 3600')
+                    ->andWhere('p.price < 5000');
+        }
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */

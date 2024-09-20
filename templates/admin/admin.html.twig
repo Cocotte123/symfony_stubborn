@@ -1,34 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Page administrateur{% endblock %}
 
 {% block body %}
 <main>
-<section class="container">
-        <div class="mx-auto p-2" style="width: 85%;border:solid black 1px;margin-top:50px; margin-bottom:30px;background-color:#ff5733;">
-            <form class="row">
-            {{ form_start(productAddForm) }}
-            
-            <div class="col-md-2">
+    <section class="container">
+        <div class="mx-auto p-2" style="width: 90%;border:solid black 1px;margin-top:50px; margin-bottom:30px;background-color:#ff5733;">
+       
+           {{ form_start(productAddForm) }}
+            <div  class="row">
+            <div class="col-md-3">
             {{ form_row(productAddForm.image) }}
             </div>
+            
             <div class="col-md-2">
             {{ form_row(productAddForm.name) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
             {{ form_row(productAddForm.price) }}
+            </div>
+            <div class="col-md-1">
+            {{ form_row(productAddForm.XS) }}
+            </div>
+            <div class="col-md-1">
+            {{ form_row(productAddForm.S) }}
+            </div>
+            <div class="col-md-1">
+            {{ form_row(productAddForm.M) }}
+            </div>
+            <div class="col-md-1">
+            {{ form_row(productAddForm.L) }}
+            </div>
+            <div class="col-md-1">
+            {{ form_row(productAddForm.XL) }}
             </div>
        
             <div class="col-12 form-check text-end">     
             {{ form_row(productAddForm.is_highlighted) }}
             </div>
             <div class=" text-end" style="margin-top:10px;">
-                <button type="submit" class="btn btn-light col-3" aria-label="Ajoutez un produit">Ajouter</button>
+            {{ form_row(productAddForm.save) }}
             </div>
 
-            
+           
+            </div>  
             {{ form_end(productAddForm) }}
-           </form>
+
         </div>
     </section>
 </main>
