@@ -3,29 +3,28 @@
 {% block title %}détails produit{% endblock %}
 
 {% block body %}
+
 <div class="container mt-4" style="width: 70%;border: solid black 1px">
     <div class="row">
         <div class="col md-8">
             <img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.name }}" style="width : 400px;display: block;margin-left: auto;margin-right: auto;">
         </div>
-        <div class="col md-4" style="padding-top:40px;border: solid black 1px">
-            <p style="font-size:2rem; font-weight:bold">{{ produit.name }}<p>
-            <p style="font-size:2rem; font-weight:bold">{{produit.formattedPrice}}€<p>
-        </div>
-        <div class="col md-4" style="padding-top:40px;border: solid black 1px">
-            <div class="custom-select">
-                <select style="width:200px;display: block;margin-left: auto;margin-right: auto;">
-                    <option value="0">Taille</option>
-                    <option value="1">XS</option>
-                    <option value="2">S</option>
-                    <option value="3">M</option>
-                    <option value="4">L</option>
-                    <option value="5">XL</option>
-                </select>
+        <div class="col md-8">
+            <div class="row">
+                <div class="col md-4" style="padding-top:40px;">
+                    <p style="font-size:2rem; font-weight:bold">{{ produit.name }}<p>
+                    <p style="font-size:2rem; font-weight:bold">{{produit.formattedPrice}}€<p>
+                </div>
+                <div class="col md-4" style="padding-top:40px;">
+
+                    {{form(sizeSelectForm)}}
+                </div>
+            </div>    
+            <div class="row">
+                <div class="text-center" style="margin-top:20px;">
+                    <button class="btn" style="width: 200px;border:solid black 1px;">Ajouter au panier</button>
+                </div>
             </div>
-        </div>
-        <div>
-            <button>Ajouter au panier</button>
         </div>
 
     </div>

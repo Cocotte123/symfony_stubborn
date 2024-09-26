@@ -47,6 +47,49 @@
             {{ form_end(productAddForm) }}
 
         </div>
+        
+        {% for produit in produits %}
+        <div class="mx-auto p-2" style="width: 90%;border:solid black 1px;margin-top:50px; margin-bottom:30px;">
+
+            <div  class="row">
+                <div class="col-md-3"><img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.name }}">
+                </div>
+                <div class="col-md-2" style="align-content: center;">
+                <label>Nom:</label>
+                <div style="border:solid black 1px;text-align:center;">{{ produit.name }}</div>
+                </div>
+                <div class="col-md-1" style="align-content: center;">
+                <label>Prix:</label>
+                <div style="border:solid black 1px;text-align:center;">{{produit.formattedPrice}}</div>
+                </div>
+                <div class="col-md-1" style="align-content: center;">
+                <label>Stock XS:</label>
+                <div style="border:solid black 1px;text-align:center;">{{produit.XS}}</div>
+                </div>
+                <div class="col-md-1" style="align-content: center;">
+                <label>Stock S:</label>
+                <div style="border:solid black 1px;text-align:center;">{{produit.S}}</div>
+                </div>
+                <div class="col-md-1" style="align-content: center;">
+                <label>Stock M:</label>
+                <div style="border:solid black 1px;text-align:center;">{{produit.M}}</div>
+                </div>
+                <div class="col-md-1" style="align-content: center;">
+                <label>Stock L:</label>
+                <div style="border:solid black 1px;text-align:center;">{{produit.L}}</div>
+                </div>
+                <div class="col-md-1" style="align-content: center;">
+                <label>Stock XL:</label>
+                <div style="border:solid black 1px;text-align:center;">{{produit.XL}}</div>
+                </div>
+                <div class="text-end">
+                    <a href="{{path('app_admin_productdelete', {id:produit.id})}}" class="btn" style="width: 200px;border:solid black 1px;">Supprimer</a>
+                    <a href="{{path('app_admin_productedit', {id:produit.id})}}" class="btn" style="width: 200px;border:solid black 1px;">Modifier</a>
+                </div>
+            </div>
+            
+        </div>
+        {% endfor %}
     </section>
 </main>
 {% endblock %}

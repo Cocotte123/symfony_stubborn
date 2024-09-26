@@ -5,18 +5,9 @@
 {% block body %}
 <main>
     <section class="container">
-     <div class="col md-4" style="padding-top:40px;border: solid black 1px">
-            <div class="custom-select">
-                <select style="width:200px;display: block;margin-left: auto;margin-right: auto;">
-                    <option value="0">Fourchette de prix</option>
-                    <option value="1">10 à 29€</option>
-                    <option value="2">30 à 35€</option>
-                    <option value="3">35 à 50€</option>
-                    <option value="4"></option>
-                   
-                </select>
-            </div>
-        </div>
+        {{ form(priceSelectForm) }}
+         
+         
         <div  class="row d-flex">
         {% for produit in produits %}
         

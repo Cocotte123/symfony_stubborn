@@ -29,15 +29,15 @@ class Size
      */
     private $size_order;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="size")
-     */
-    private $stocks;
+    #/**
+    # * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="size")
+    # */
+    #//private $stocks;
 
-    public function __construct()
-    {
-        $this->stocks = new ArrayCollection();
-    }
+    #//public function __construct()
+    #//{
+    #   // $this->stocks = new ArrayCollection();
+    #//}
 
     public function getId(): ?int
     {
@@ -68,33 +68,33 @@ class Size
         return $this;
     }
 
-    /**
-     * @return Collection<int, Stock>
-     */
-    public function getStocks(): Collection
-    {
-        return $this->stocks;
-    }
+    #/**
+    # * @return Collection<int, Stock>
+    # */
+    #public function getStocks(): Collection
+    #{
+    #    return $this->stocks;
+    #}
 
-    public function addStock(Stock $stock): self
-    {
-        if (!$this->stocks->contains($stock)) {
-            $this->stocks[] = $stock;
-            $stock->setSize($this);
-        }
+    #public function addStock(Stock $stock): self
+    #{
+    #    if (!$this->stocks->contains($stock)) {
+    #        $this->stocks[] = $stock;
+    #        $stock->setSize($this);
+    #    }
+    #
+    #    return $this;
+    #}
 
-        return $this;
-    }
-
-    public function removeStock(Stock $stock): self
-    {
-        if ($this->stocks->removeElement($stock)) {
-            // set the owning side to null (unless already changed)
-            if ($stock->getSize() === $this) {
-                $stock->setSize(null);
-            }
-        }
-
-        return $this;
-    }
+    #public function removeStock(Stock $stock): self
+    #{
+    #    if ($this->stocks->removeElement($stock)) {
+    #        // set the owning side to null (unless already changed)
+   #         if ($stock->getSize() === $this) {
+    #            $stock->setSize(null);
+    #        }
+    #    }
+    #
+    #    return $this;
+    #}
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\PriceSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,22 +40,37 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-    public function filterbyprice($intervalprice=null){
-
+    public function filterbyprice($priceFrom,$priceTo) {
+      
+       
         $query= $this->createQueryBuilder('p');
-        if($intervalprice = 1) {
-            $query->where('p.price >= 1000')
-                    ->andWhere('p.price < 3000');
+        
+        if ($priceFrom != null) {
+            $query->where('p.price >= :priceFrom');
+            $query ->andWhere('p.price < :priceTo');
+            $query ->setParameter('priceFrom', $priceFrom);
+            $query ->setParameter('priceTo', $priceTo);
         }
-        if ($intervalprice = 2){
-            $query->where('p.price >= 3000')
-                    ->andWhere('p.price < 3600');
-        }
-        if ($intervalprice = 3){
-            $query->where('p.price >= 3600')
-                    ->andWhere('p.price < 5000');
-        }
+        
+       
         return $query->getQuery()->getResult();
+
+        //$entityManager = $this->getEntityManager();
+        
+        //$query = $entityManager->createQuery(
+            
+        //    'SELECT p
+        //    FROM App\Entity\Product p
+        //    WHERE p.price >= 10
+        //    AND p.price <30
+        //    ORDER BY p.price ASC'
+            
+        //);
+        
+        
+
+        // returns an array of Product objects
+        //return $query->getResult();
     }
 
 //    /**

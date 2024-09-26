@@ -127,7 +127,7 @@ class Product
         return number_format($this->price,2,',',' ');
     }
 
-    public function isIsHighlighted(): ?bool
+    public function isHighlighted(): ?bool
     {
         return $this->is_highlighted;
     }
