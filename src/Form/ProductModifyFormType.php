@@ -10,14 +10,11 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
-class ProductAddFormType extends AbstractType
+class ProductModifyFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -32,13 +29,15 @@ class ProductAddFormType extends AbstractType
                 //'divisor' => 100,
             ])
             ->add('is_highlighted', CheckboxType::class, [
-               'label' => "Mis en avant :",
-               'required'=> false
-                ])
-            ->add('image', Filetype::class, [
-                'attr' => ['class' => 'form-control'],
-                'label' => "Image :"
-            ])
+                'label' => "Mis en avant :",
+                'required'=> false
+             ])
+            //->add('image', Filetype::class, [
+            //    'attr' => ['class' => 'form-control'],
+            //    'label' => "Image :",
+            //    'data_class' => null,
+            //    'required'=> false
+            //])
             ->add('XS', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => "Stock XS :"
@@ -59,12 +58,7 @@ class ProductAddFormType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'label' => "Stock XL :"
             ])
-            ->add('save', Submittype::class, [
-                'label' => "Ajouter"
-            ])
-
         ;
-       
     }
 
     public function configureOptions(OptionsResolver $resolver): void

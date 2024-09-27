@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductsController!{% endblock %}
+{% block title %}Liste des produits{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/stubborn/src/Controller/ProductsController.php'|file_link(0) }}">src/Controller/ProductsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/stubborn/templates/products/index.html.twig'|file_link(0) }}">templates/products/index.html.twig</a></code></li>
-    </ul>
-</div>
+<main>
+    <section class="container">
+        {{ form(priceSelectForm) }}
+         
+         
+        <div  class="row d-flex">
+        {% for produit in produits %}
+        
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;padding:10px;margin-bottom:20px;">
+                    <img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.name }}">
+                    <div class="d-flex flex-row mx-auto" style="width: 90%;">
+                        <div class="text-left"  style="width: 50%;">
+                        <h5 class="card-title">{{ produit.name }}</h5>
+                        <p class="card-text">{{produit.formattedPrice}}€</p>
+                        </div>
+                        <div class="align-self-center text-center"  style="width: 50%;">
+                        <a href="{{path('app_product_detail', {id:produit.id})}}" class="btn btn-primary">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+        {% endfor %}
+        </div>
+    </section>
+</main>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\PriceSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,39 @@ class ProductRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function filterbyprice($priceFrom,$priceTo) {
+      
+       
+        $query= $this->createQueryBuilder('p');
+        
+        if ($priceFrom != null) {
+            $query->where('p.price >= :priceFrom');
+            $query ->andWhere('p.price < :priceTo');
+            $query ->setParameter('priceFrom', $priceFrom);
+            $query ->setParameter('priceTo', $priceTo);
+        }
+        
+       
+        return $query->getQuery()->getResult();
+
+        //$entityManager = $this->getEntityManager();
+        
+        //$query = $entityManager->createQuery(
+            
+        //    'SELECT p
+        //    FROM App\Entity\Product p
+        //    WHERE p.price >= 10
+        //    AND p.price <30
+        //    ORDER BY p.price ASC'
+            
+        //);
+        
+        
+
+        // returns an array of Product objects
+        //return $query->getResult();
     }
 
 //    /**

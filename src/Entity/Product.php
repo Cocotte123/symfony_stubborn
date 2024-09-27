@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -21,11 +22,14 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Le nom du produit ne peut pas être vide.")
+     * @Assert\Length(max=50, maxMessage="Le nom du produit doit faire {{limit}} caractères maximum.")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
+     * @Assert\Positive(message="Le prix doit être positif.")
      */
     private $price;
 
@@ -40,14 +44,54 @@ class Product
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="product", orphanRemoval=true)
+     * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Le prix doit être positif.")
      */
-    private $stocks;
+    private $XS;
 
-    public function __construct()
-    {
-        $this->stocks = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Le prix doit être positif.")
+     */
+    private $S;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Le prix doit être positif.")
+     */
+    private $M;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Le prix doit être positif.")
+     */
+    private $L;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Le prix doit être positif.")
+     */
+    private $XL;
+
+    #/**
+    # * @ORM\OneToMany(targetEntity=StockSize::class, mappedBy="product", orphanRemoval: true, cascade:['persist'] )
+    # */
+    #private $stockSizes;
+
+    #public function __construct()
+    #{
+    #    $this->stockSizes = new ArrayCollection();
+    #}
+
+    #/**
+    # * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="product", orphanRemoval=true)
+    # */
+    #private $stocks;
+
+    #public function __construct()
+    #{
+    #    $this->stocks = new ArrayCollection();
+    #}
 
     public function getId(): ?int
     {
@@ -66,19 +110,24 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
         return $this;
     }
 
-    public function isIsHighlighted(): ?bool
+    public function getFormattedPrice(): string
+    {
+        return number_format($this->price,2,',',' ');
+    }
+
+    public function isHighlighted(): ?bool
     {
         return $this->is_highlighted;
     }
@@ -102,32 +151,122 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, Stock>
-     */
-    public function getStocks(): Collection
+    #/**
+    # * @return Collection<int, Stock>
+    # */
+    #public function getStocks(): Collection
+    #{
+    #    return $this->stocks;
+    #}
+
+    #public function addStock(Stock $stock): self
+    #{
+    #    if (!$this->stocks->contains($stock)) {
+    #        $this->stocks[] = $stock;
+    #        $stock->setProduct($this);
+    #    }
+    #
+    #    return $this;
+    #}
+
+    #public function removeStock(Stock $stock): self
+    #{
+    #    if ($this->stocks->removeElement($stock)) {
+    #        // set the owning side to null (unless already changed)
+    #        if ($stock->getProduct() === $this) {
+    #            $stock->setProduct(null);
+    #        }
+    #    }
+
+    #    return $this;
+    #}
+
+    #/**
+    # * @return Collection<int, StockSize>
+    # */
+    #public function getStockSizes(): Collection
+    #{
+    #    return $this->stockSizes;
+    #}
+
+    #public function addStockSize(StockSize $stockSize): self
+    #{
+    #    if (!$this->stockSizes->contains($stockSize)) {
+    #        $this->stockSizes[] = $stockSize;
+    #        $stockSize->setProduct($this);
+    #    }
+
+    #    return $this;
+    #}
+
+    #public function removeStockSize(StockSize $stockSize): self
+    #{
+    #    if ($this->stockSizes->removeElement($stockSize)) {
+    #        // set the owning side to null (unless already changed)
+    #        if ($stockSize->getProduct() === $this) {
+    #            $stockSize->setProduct(null);
+    #        }
+    #    }
+
+    #    return $this;
+    #}
+
+    public function getXS(): ?int
     {
-        return $this->stocks;
+        return $this->XS;
     }
 
-    public function addStock(Stock $stock): self
+    public function setXS(int $XS): self
     {
-        if (!$this->stocks->contains($stock)) {
-            $this->stocks[] = $stock;
-            $stock->setProduct($this);
-        }
+        $this->XS = $XS;
 
         return $this;
     }
 
-    public function removeStock(Stock $stock): self
+    public function getS(): ?int
     {
-        if ($this->stocks->removeElement($stock)) {
-            // set the owning side to null (unless already changed)
-            if ($stock->getProduct() === $this) {
-                $stock->setProduct(null);
-            }
-        }
+        return $this->S;
+    }
+
+    public function setS(int $S): self
+    {
+        $this->S = $S;
+
+        return $this;
+    }
+
+    public function getM(): ?int
+    {
+        return $this->M;
+    }
+
+    public function setM(int $M): self
+    {
+        $this->M = $M;
+
+        return $this;
+    }
+
+    public function getL(): ?int
+    {
+        return $this->L;
+    }
+
+    public function setL(int $L): self
+    {
+        $this->L = $L;
+
+        return $this;
+    }
+
+    public function getXL(): ?int
+    {
+        return $this->XL;
+    }
+
+    public function setXL(int $XL): self
+    {
+        $this->XL = $XL;
 
         return $this;
     }
