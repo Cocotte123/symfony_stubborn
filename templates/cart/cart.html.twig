@@ -3,18 +3,49 @@
 {% block title %}Hello CartController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<main>
+    <section class="container">
+    {% for article in contenuPanier %}
+    <div class="mx-auto p-2" style="width: 90%;border:solid black 1px;margin-top:50px; margin-bottom:30px;">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <div  class="row">
+                <div class="col-md-3"><img src="{{ asset('uploads/' ~ article.orderedProduct.image) }}" alt="{{ article.orderedProduct.name }}">
+                </div>
+                <div class="col-md-2" style="align-content: center;">
+                <label>Nom:</label>
+                <div style="border:solid black 1px;text-align:center;">{{ article.orderedProduct.name }}</div>
+                </div>
+                <div class="col-md-2" style="align-content: center;">
+                <label>Prix:</label>
+                <div style="border:solid black 1px;text-align:center;">{{article.orderedProduct.formattedPrice}}€</div>
+                </div>
+                <div class="col-md-2" style="align-content: center;">
+                <label>Taille :</label>
+                <div style="border:solid black 1px;text-align:center;">xx</div>
+                </div>
+                <div class="col-md-2" style="align-content: center;">
+                <label>Quantité :</label>
+                <div style="border:solid black 1px;text-align:center;">{{article.orderedQuantity}}</div>
+                </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/stubborn/src/Controller/CartController.php'|file_link(0) }}">src/Controller/CartController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/stubborn/templates/cart/index.html.twig'|file_link(0) }}">templates/cart/index.html.twig</a></code></li>
-    </ul>
-</div>
+                <div class="text-end">
+                    <a href="{{path('app_cart_remove', {id:article.orderedProduct.id})}}" class="btn" style="width: 200px;border:solid black 1px;">Retirer du panier</a>
+                </div>
+            </div>
+            
+        </div>
+    {% else %}
+    <p>Votre panier est vide</p>
+    {% endfor %}
+    <div class="col mx-auto p-2" style="border:solid black 1px;width: 90%;">
+        <div  class="row">
+            <div class="col-md-3">{{total|number_format(2, ',', ' ')}}€</div>
+            <a href="#" class="btn" style="width: 200px;border:solid #DC143C 1px; background-color:#F08080;" class="col-md-3">Finaliser la commande</a>
+        </div>
+        <div  class="row">
+            <a href="{{path('app_products')}}" class="btn" style="width: 200px;border:solid #556B2F 1px;background-color:#8FBC8F;">Continuer mes achats</a>
+        </div>
+    </div>
+    </section>
+</main>
 {% endblock %}

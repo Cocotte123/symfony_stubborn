@@ -67,12 +67,14 @@ class ProductsController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         //sélection de la taille
+        $selectedSize = "";
         $sizeSelectForm = $this->createFormBuilder()
             ->add('size', EntityType::class,[
                 'class'=> Size::class,
                 'choice_label'=> 'size',
                 'label' => false,
                 'placeholder'=> 'Taille',
+                'required' => true,
                 'query_builder' => function (SizeRepository $sizeRepository){return $sizeRepository->createQueryBuilder('s')->orderBy('s.size_order','ASC'); },
                 'attr' => ['onChange' => 'submit()'],
             ])
@@ -90,6 +92,7 @@ class ProductsController extends AbstractController
             'produit' => $productrepository->findOneBy(['id'=>$id]),
             'sizeSelects' => $sizerepository->findAll(),
             'sizeSelectForm' => $sizeSelectForm->createView(),
+            'selectedSize' => $selectedSize,
         ]);
     }
 }

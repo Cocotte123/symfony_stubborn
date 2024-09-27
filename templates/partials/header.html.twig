@@ -23,7 +23,7 @@
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{{path('app_home_page')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_home_page') ? 'underline':'none'}}">Accueil</a></li>
             <li><a href="{{path('app_products')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_products') ? 'underline':'none'}}">Boutique</a></li>
-            <li><a href="#" class="nav-link px-2">Panier</a></li>
+            <li><a href="{{path('app_cart_cart')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_cart_cart') ? 'underline':'none'}}">Panier</a></li>
             <li><a href="{{path('app_logout')}}" class="nav-link px-2" style =" color:black;">Se déconnecter</a></li>
             </ul>
         </div>
