@@ -22,16 +22,23 @@ class CartController extends AbstractController
 
         $panier = $session->get("panier",[]);
     
-
+        
         //on "fabrique" les données
         $contenuPanier = [];
         $total = 0;
+        
 
-        foreach($panier as $id => $quantity){
+        foreach($panier as $productSize=> $quantity){
+            //dd(strtok($productSize,"."));
+            $id = strtok($productSize,".");
             $product = $productRepository->find($id);
+            $xxx=explode(".",$productSize);
+            
+            $size = ($xxx[1]);
             $contenuPanier[] = [
                 "orderedProduct" => $product,
                 "orderedQuantity" => $quantity,
+                "size" => $size,
             ];
             
             $total += $product->getPrice() * $quantity;
@@ -46,51 +53,61 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/add/{id}", name="add")
+     * @Route("/add/{id}/{size?}", name="add", defaults={"size": ""})
      */
     public function add($id,$size, SessionInterface $session, ProductRepository $productRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-
+        
         //on récupère le panier actuel
         $panier = $session->get("panier",[]);
         $id = $productRepository->findOneBy(['id'=>$id])->getId();
+        $productSize = $id.".".$size;
+        //dd(strtok($productSize,"."));
+        //$xxx=explode(".",$productSize);
+        //dd(explode(".",$productSize)[1]);
         
-       // $id = $product->getId();
-
-        if(!empty($panier[$id])){
-            $panier[$id]++;
-        }else{
-            $panier[$id]=1;
+        if(isset($panier[$productSize])){
+            $panier[$productSize]++; 
         }
+        else{
+            $panier[$productSize] =1;
+        }
+
+        //if(!empty($panier[$id])){
+        //        $panier[$id]++;              
+        //}else{
+        //    $panier[$id] =1;
+        //}
         
 
         //on sauvegarde la session
         $session -> set("panier", $panier);
-      
+        //dd($session);
 
         return $this->redirectToRoute("app_cart_cart");
     }
 
     /**
-     * @Route("/remove/{id}", name="remove")
+     * @Route("/remove/{id}/{size?}", name="remove")
      */
-    public function remove($id, SessionInterface $session, ProductRepository $productRepository): Response
+    public function remove($id,$size, SessionInterface $session, ProductRepository $productRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         //on récupère le panier actuel
         $panier = $session->get("panier",[]);
         $id = $productRepository->findOneBy(['id'=>$id])->getId();
+        $productSize = $id.".".$size;
         
        // $id = $product->getId();
 
-        if(!empty($panier[$id])){
-            if($panier[$id]>1){
-                $panier[$id]--;
+        if(!empty($panier[$productSize])){
+            if($panier[$productSize]>1){
+                $panier[$productSize]--;
             }
             else {
-                unset($panier[$id]);
+                unset($panier[$productSize]);
             }
             
         }

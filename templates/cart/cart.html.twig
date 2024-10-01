@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-2" style="align-content: center;">
                 <label>Taille :</label>
-                <div style="border:solid black 1px;text-align:center;">xx</div>
+                <div style="border:solid black 1px;text-align:center;">{{article.size}}</div>
                 </div>
                 <div class="col-md-2" style="align-content: center;">
                 <label>Quantité :</label>
@@ -29,23 +29,28 @@
                 </div>
 
                 <div class="text-end">
-                    <a href="{{path('app_cart_remove', {id:article.orderedProduct.id})}}" class="btn" style="width: 200px;border:solid black 1px;">Retirer du panier</a>
+                    <a href="{{path('app_cart_remove', {id:article.orderedProduct.id,size:article.size})}}" class="btn" style="width: 200px;border:solid black 1px;">Retirer du panier</a>
                 </div>
             </div>
             
-        </div>
+    </div>
+    
     {% else %}
     <p>Votre panier est vide</p>
     {% endfor %}
-    <div class="col mx-auto p-2" style="border:solid black 1px;width: 90%;">
-        <div  class="row">
-            <div class="col-md-3">{{total|number_format(2, ',', ' ')}}€</div>
-            <a href="#" class="btn" style="width: 200px;border:solid #DC143C 1px; background-color:#F08080;" class="col-md-3">Finaliser la commande</a>
+    <div class="row mx-auto p-2" style="width: 90%;justify-content:flex-end">
+        <div  class="col col-md-3">
+            <div style="width: 200px;border:solid black 1px;" class="text-center col-md-3">TOTAL : {{total|number_format(2, ',', ' ')}}€</div>
+            
         </div>
-        <div  class="row">
+        <div  class="col col-md-3">
+            <div class="row">
+            <a href="#" class="btn" style="width: 200px;border:solid #DC143C 1px; background-color:#F08080;margin-bottom:10px;" class="col-md-3">Finaliser la commande</a>
             <a href="{{path('app_products')}}" class="btn" style="width: 200px;border:solid #556B2F 1px;background-color:#8FBC8F;">Continuer mes achats</a>
+            </div>
         </div>
     </div>
+    
     </section>
 </main>
 {% endblock %}

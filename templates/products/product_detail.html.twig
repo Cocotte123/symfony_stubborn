@@ -21,9 +21,15 @@
                 </div>
             </div>    
             <div class="row">
+            {% if selectedSize is not null and selectedSize is not empty%}
                 <div class="text-center" style="margin-top:20px;">
-                    <a href="{{path('app_cart_add', {id:produit.id})}}" class="btn" style="width: 200px;border:solid black 1px;">Ajouter au panier</a>
+                    <a href="{{path('app_cart_add', {id:produit.id,size:selectedSize})}}" class="btn" style="width: 200px;border:solid black 1px;">Ajouter au panier</a>
                 </div>
+            {% else %}
+            <div class="text-center" style="margin-top:20px;">
+                    <p> Choisissez une taille</p>
+                </div>
+            {% endif %}
             </div>
         </div>
 
