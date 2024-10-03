@@ -7,33 +7,41 @@
             <p style="margin-left:100px">Don't compromise on your look</p>
         </div>
 
-        {% if is_granted("ROLE_ADMIN") %}
-            <li><a href="{{path('app_admin')}}" class="nav-link px-2">Administration</a></li>
-        {% endif %}
+        
         {% if app.request.get('_route') == 'app_admin' %}
-        <div class="col-md-4 text-end">
-            <p>Back-Office</p>
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li ><a href="{{path('app_products')}}" class="nav-link px-2" style =" color:black;">Boutique</a></li>
-            <li><a href="{{path('app_logout')}}" class="nav-link px-2" style =" color:black;">Se déconnecter</a></li>
-            </ul>
-        </div>
+            <h1>Back-Office</h1>
+        
+            <div class="col-md-4 text-end">
+                
+                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li ><a href="{{path('app_products')}}" class="nav-link px-2" style =" color:black;">Boutique</a></li>
+                <li><a href="{{path('app_logout')}}" class="nav-link px-2" style =" color:black;">Se déconnecter</a></li>
+                </ul>
+            </div>
         {% elseif app.user%}
-        <div class="col-md-4 text-end">
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{path('app_home_page')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_home_page') ? 'underline':'none'}}">Accueil</a></li>
-            <li><a href="{{path('app_products')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_products') ? 'underline':'none'}}">Boutique</a></li>
-            <li><a href="#" class="nav-link px-2">Panier</a></li>
-            <li><a href="{{path('app_logout')}}" class="nav-link px-2" style =" color:black;">Se déconnecter</a></li>
-            </ul>
-        </div>
+            <div class="col-md-4 text-end">
+                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{path('app_home_page')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_home_page') ? 'underline':'none'}}">Accueil</a></li>
+                <li><a href="{{path('app_products')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_products') ? 'underline':'none'}}">Boutique</a></li>
+                <li><a href="{{path('app_cart_cart')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_cart_cart') ? 'underline':'none'}}">Panier</a></li>
+                <li><a href="{{path('app_logout')}}" class="nav-link px-2" style =" color:black;">Se déconnecter</a></li>
+                </ul>
+            </div>
         {% else %}
-        <div class="col-md-3 text-end">
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{path('app_home_page')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_home_page') ? 'underline':'none'}}">Accueil</a></li>
-            <li><a href="{{path('app_register')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_register') ? 'underline':'none'}}">S'inscrire</a></li>
-            <li><a href="{{path('app_login')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_login') ? 'underline':'none'}}">Se Connecter</a></li>
-            </ul>
+            <div class="col-md-3 text-end">
+                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{path('app_home_page')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_home_page') ? 'underline':'none'}}">Accueil</a></li>
+                <li><a href="{{path('app_register')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_register') ? 'underline':'none'}}">S'inscrire</a></li>
+                <li><a href="{{path('app_login')}}" class="nav-link px-2"  style =" color:black; text-decoration: {{(app.request.get('_route') == 'app_login') ? 'underline':'none'}}">Se Connecter</a></li>
+                </ul>
+            </div>
         {% endif %}
+        
+        {% if is_granted("ROLE_ADMIN") %}
+            
+            <a href="{{path('app_admin')}}" class="nav-link px-2" style =" color:black;">Administration</a></li>
+           
+        {% endif %}
+        
     </nav>
 </header>
