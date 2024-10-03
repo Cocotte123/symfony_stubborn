@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Votre panier{% endblock %}
 
 {% block body %}
 <main>
@@ -36,7 +36,7 @@
     </div>
     
     {% else %}
-    <p>Votre panier est vide</p>
+    <p class="text-center">Votre panier est vide</p>
     {% endfor %}
     <div class="row mx-auto p-2" style="width: 90%;justify-content:flex-end">
         <div  class="col col-md-3">
@@ -45,12 +45,13 @@
         </div>
         <div  class="col col-md-3">
             <div class="row">
-            <a href="#" class="btn" style="width: 200px;border:solid #DC143C 1px; background-color:#F08080;margin-bottom:10px;" class="col-md-3">Finaliser la commande</a>
+            <a href="{{path('app_cart_pay')}}" class="btn" style="width: 200px;border:solid #DC143C 1px; background-color:#F08080;margin-bottom:10px;" class="col-md-3">Finaliser la commande</a>
             <a href="{{path('app_products')}}" class="btn" style="width: 200px;border:solid #556B2F 1px;background-color:#8FBC8F;">Continuer mes achats</a>
             </div>
         </div>
     </div>
     
     </section>
+    
 </main>
 {% endblock %}

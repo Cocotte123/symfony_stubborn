@@ -2,11 +2,18 @@
 
 namespace App\Controller;
 use App\Entity\Product;
+
+
 use App\Repository\ProductRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
+use Symfony\Component\HttpFoundation\Request;
+use App\Service\StripeService;
 
 /**
 * @Route("/cart", name="app_cart_")
@@ -43,7 +50,8 @@ class CartController extends AbstractController
             
             $total += $product->getPrice() * $quantity;
         }
-
+        
+      
 
         return $this->render('cart/cart.html.twig', [
             'controller_name' => 'CartController',
@@ -63,9 +71,7 @@ class CartController extends AbstractController
         $panier = $session->get("panier",[]);
         $id = $productRepository->findOneBy(['id'=>$id])->getId();
         $productSize = $id.".".$size;
-        //dd(strtok($productSize,"."));
-        //$xxx=explode(".",$productSize);
-        //dd(explode(".",$productSize)[1]);
+        
         
         if(isset($panier[$productSize])){
             $panier[$productSize]++; 
@@ -73,13 +79,7 @@ class CartController extends AbstractController
         else{
             $panier[$productSize] =1;
         }
-
-        //if(!empty($panier[$id])){
-        //        $panier[$id]++;              
-        //}else{
-        //    $panier[$id] =1;
-        //}
-        
+      
 
         //on sauvegarde la session
         $session -> set("panier", $panier);
@@ -119,4 +119,67 @@ class CartController extends AbstractController
 
         return $this->redirectToRoute("app_cart_cart");
     }
+
+    /**
+     * @Route("/pay", name="pay")
+     */
+    public function pay(SessionInterface $session, ProductRepository $productRepository, StripeService $stripeService): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $panier = $session->get("panier",[]);
+        $panierId = $session->getId();
+
+        $contenuPanier = [];
+        
+        foreach($panier as $productSize=> $quantity){
+            
+            $id = strtok($productSize,".");
+            $product = $productRepository->find($id);
+            $xxx=explode(".",$productSize);
+            
+            $size = ($xxx[1]);
+            $contenuPanier[] = [
+                "orderedProduct" => $product,
+                "orderedQuantity" => $quantity,
+                "size" => $size,
+            ];
+           
+            
+        }
+        
+
+        $checkout_session = $stripeService->stripe($contenuPanier,$panierId);
+      
+
+        //////////////////////////////////////////////////////////////////
+        return $this->redirect($checkout_session);
+       
+    }
+
+    /**
+     * @Route("/pay/success", name="pay_success")
+     */
+    public function success(Request $request,SessionInterface $session): Response
+    {
+       
+        //on récupère le panier pour le supprimer
+        $session->set("panier",[]);
+          
+        return $this->render('cart/success.html.twig', [
+            'controller_name' => 'CartController',
+            
+        ]);
+    }
+
+    /**
+     * @Route("/pay/cancel", name="pay_cancel")
+     */
+    public function cancel(): Response
+    {
+        return $this->render('cart/cancel.html.twig', [
+            'controller_name' => 'CartController',
+            
+        ]);
+    }
+
 }

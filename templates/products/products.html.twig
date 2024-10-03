@@ -5,13 +5,16 @@
 {% block body %}
 <main>
     <section class="container">
-        {{ form(priceSelectForm) }}
+        
          
          
         <div  class="row d-flex">
+          <div class="col-md-4" style="display: flex;justify-content: center;padding-top:50px;">
+           {{ form(priceSelectForm) }}
+          </div>
         {% for produit in produits %}
-        
-            <div class="col-md-4">
+         
+            <div class="col-md-4" style="display: flex;justify-content: center;">
                 <div class="card" style="width: 18rem;padding:10px;margin-bottom:20px;">
                     <img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.name }}">
                     <div class="d-flex flex-row mx-auto" style="width: 90%;">
