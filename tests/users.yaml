@@ -1,9 +1,0 @@
-App\Entity\User;
-
-user_user:
-  email: "tintin\\@gmail.com"
-  roles: "[]"
-  password: "\\$2y\\$10\\$fMjT6VvHmb/g03KyDzMBVOk.nrHC5eEPhoGEc8U160fYF4LC/a.j6"
-  name: "tintin"
-  delivery_adress: "adresse"
-  isVerified: 1
