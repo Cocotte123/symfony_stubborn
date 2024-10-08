@@ -13,19 +13,19 @@ use Stripe\Stripe;
 class StripeService {
 
    
-    private $productRepository;
-    private $entityManager;
-    private $doctrine;
+    //private $productRepository;
+    //private $entityManager;
+    //private $doctrine;
     
 
-    public function __constructor(ProductRepository $productRepository,EntityManagerInterface $entityManager,ManagerRegistry $doctrine)
-    {
+    //public function __constructor(ProductRepository $productRepository,EntityManagerInterface $entityManager,ManagerRegistry $doctrine)
+    //{
                 
-        $this->productRepository = $productRepository;
-        $this->entityManager = $entityManager;
-        $this->doctrine = $doctrine;
+    //    $this->productRepository = $productRepository;
+    //    $this->entityManager = $entityManager;
+    //    $this->doctrine = $doctrine;
         
-    }
+   // }
 
     
     public function stripe(array $contenuPanier, string $panierId): string
