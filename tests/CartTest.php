@@ -64,6 +64,7 @@ class CartTest extends WebTestCase
         
        
         $client->request('GET','/cart/pay');
+        $client->followRedirects();
         $url = $_SERVER['HTTP_HOST'];
         
         $this->assertContains($url,'checkout.stripe.com');
