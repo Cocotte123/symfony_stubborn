@@ -150,7 +150,7 @@ class CartController extends AbstractController
 
         $checkout_session = $stripeService->stripe($contenuPanier,$panierId);
       
-
+        //dd($checkout_session);
         //////////////////////////////////////////////////////////////////
         return $this->redirect($checkout_session);
        

@@ -33,7 +33,9 @@ class StripeService {
             
             
             ///////////////////////////
-            require_once '../vendor/autoload.php';
+            //require_once '../vendor/autoload.php';
+            
+            
             //require_once '../secrets.php';
             $stripeSecretKey = $_ENV["STRIPE_SECRET_KEY"];
 

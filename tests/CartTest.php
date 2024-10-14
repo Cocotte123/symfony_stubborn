@@ -1,51 +1,43 @@
 <?php
 
 namespace App\Tests;
-use App\Repository\UserRepository;
+use App\Entity\User;
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Browserkit\Cookie;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
 
-use Stripe\Stripe;
-use App\Service\StripeService;
-
-
-
-class CartControllerTest extends WebTestCase {
-
-    
-    public function testAddRoute() {
-       
-        //simuler un user connecté
+class CartTest extends WebTestCase
+{
+   public function testIfProductAdded(): void
+    {
         $client = static::createClient();
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $loggedUser = $userRepository->findOneById('3');
-        $client->loginUser($loggedUser);
-    
-            
         
-       
-        $client->request('GET','/cart/add/5/S');
-        $this->assertResponseRedirects('/cart/');
-        
-    }
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
+        $loggedUser = $entityManager->find(User::class,5);
+        
+        $client->loginUser($loggedUser);
+        $crawler = $client->request('GET', '/cart/add/15/S');
+
+        $this->assertResponseRedirects('/cart/');
+    }
 
     public function testPayRoute() {
        
         //simuler un user connecté
         $client = static::createClient();
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $loggedUser = $userRepository->findOneById('3');
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $loggedUser = $entityManager->find(User::class,5);
+        
         $client->loginUser($loggedUser);
 
         //créer le panier
@@ -53,8 +45,8 @@ class CartControllerTest extends WebTestCase {
         $session->start();
         $panier = $session->get("panier",[]);
         $productRepository = static::getContainer()->get(ProductRepository::class);
-        $id = $productRepository->findOneBy(['id'=>'5'])->getId();
-        $size='5';
+        $id = $productRepository->findOneBy(['name'=>'product5'])->getId();
+        $size='S';
         $productSize = $id.".".$size;
                
         if(isset($panier[$productSize])){
@@ -72,8 +64,10 @@ class CartControllerTest extends WebTestCase {
         
        
         $client->request('GET','/cart/pay');
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $url = $_SERVER['HTTP_HOST'];
+        
+        $this->assertContains($url,'checkout.stripe.com');
+        //$this->assertResponseHeader('Content-Type', 'application/json');
         
     }
-
 }
