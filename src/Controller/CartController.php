@@ -153,6 +153,7 @@ class CartController extends AbstractController
         //dd($checkout_session);
         //////////////////////////////////////////////////////////////////
         return $this->redirect($checkout_session);
+        
        
     }
 

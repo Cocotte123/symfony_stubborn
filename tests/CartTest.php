@@ -22,10 +22,10 @@ class CartTest extends WebTestCase
         
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $loggedUser = $entityManager->find(User::class,5);
+        $loggedUser = $entityManager->find(User::class,8);
         
         $client->loginUser($loggedUser);
-        $crawler = $client->request('GET', '/cart/add/15/S');
+        $crawler = $client->request('GET', '/cart/add/35/S');
 
         $this->assertResponseRedirects('/cart/');
     }
@@ -36,7 +36,7 @@ class CartTest extends WebTestCase
         $client = static::createClient();
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $loggedUser = $entityManager->find(User::class,5);
+        $loggedUser = $entityManager->find(User::class,8);
         
         $client->loginUser($loggedUser);
 
@@ -45,7 +45,7 @@ class CartTest extends WebTestCase
         $session->start();
         $panier = $session->get("panier",[]);
         $productRepository = static::getContainer()->get(ProductRepository::class);
-        $id = $productRepository->findOneBy(['name'=>'product5'])->getId();
+        $id = $productRepository->findOneBy(['name'=>'Bluebelt'])->getId();
         $size='S';
         $productSize = $id.".".$size;
                
@@ -66,6 +66,7 @@ class CartTest extends WebTestCase
         $client->request('GET','/cart/pay');
         $client->followRedirects();
         $url = $_SERVER['HTTP_HOST'];
+        //dd($url);
         
         $this->assertContains($url,'checkout.stripe.com');
         //$this->assertResponseHeader('Content-Type', 'application/json');
